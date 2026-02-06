@@ -4,60 +4,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Attendance System</title>
+    <title>ATTENDIX - Smart Attendance System</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .landing-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #171e2e;
+            padding: 20px;
+        }
+
+        .landing-logo {
+            font-size: 72px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+            text-transform: capitalize;
+        }
+
+        /* Pixel-style letter effect */
+        .landing-logo span {
+            display: inline-block;
+        }
+
+        .landing-subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 22px;
+            color: #7c8cff;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+        }
+
+        .landing-buttons {
+            display: flex;
+            gap: 40px;
+        }
+
+        .landing-btn {
+            padding: 18px 60px;
+            font-family: 'Space Mono', monospace;
+            font-size: 18px;
+            font-weight: 400;
+            color: #1a1f2e;
+            background: #9aa5c4;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .landing-btn:hover {
+            background: #b8c2dc;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .landing-logo {
+                font-size: 48px;
+            }
+
+            .landing-subtitle {
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .landing-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .landing-btn {
+                padding: 16px 50px;
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="auth-page">
-        <div class="container-sm">
-            <div class="card" style="text-align: center;">
-                <div class="card-header">
-                    <h1>📋 Smart Attendance System</h1>
-                    <p>QR-based digital attendance with real-time tracking</p>
-                </div>
+    <div class="landing-page">
+        <h1 class="landing-logo">Attendix</h1>
+        <p class="landing-subtitle">Smart Attendance System</p>
 
-                <div style="margin-bottom: 24px;">
-                    <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        Secure, time-limited QR codes • Real-time attendance • Analytics dashboard
-                    </p>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <a href="login.html" class="btn btn-primary">
-                        🔐 Sign In
-                    </a>
-                    <a href="register.html" class="btn btn-secondary">
-                        📝 Create Account
-                    </a>
-                </div>
-
-                <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Features</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
-                        <div>
-                            <span style="font-size: 20px;">⏱️</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">45-min
-                                time-limited QR</p>
-                        </div>
-                        <div>
-                            <span style="font-size: 20px;">🔒</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Prevents proxy
-                                attendance</p>
-                        </div>
-                        <div>
-                            <span style="font-size: 20px;">📊</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Real-time
-                                analytics</p>
-                        </div>
-                        <div>
-                            <span style="font-size: 20px;">📥</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">CSV export
-                                reports</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="landing-buttons">
+            <a href="login.html" class="landing-btn">Sign In</a>
+            <a href="register.html" class="landing-btn">Register</a>
         </div>
     </div>
 </body>
