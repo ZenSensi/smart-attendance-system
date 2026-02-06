@@ -13,6 +13,12 @@
   --warning: #f59e0b;
   --radius: 12px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  
+  /* New ATTENDIX Theme Colors */
+  --attendix-left: #1e2a47;
+  --attendix-right: #151d30;
+  --attendix-accent: #7c8cff;
+  --attendix-input-border: rgba(255, 255, 255, 0.3);
 }
 
 * {
@@ -22,11 +28,235 @@
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 100%);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--attendix-right);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.6;
+}
+
+/* ===========================================
+   ATTENDIX AUTH LAYOUT - Two Panel Design
+   =========================================== */
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Left Panel - Branding */
+.auth-left {
+  flex: 0 0 42%;
+  background: var(--attendix-left);
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  position: relative;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: auto;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--text-primary);
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+
+.auth-title-section {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+}
+
+.auth-title {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background: var(--attendix-accent);
+  border-radius: 2px;
+}
+
+.auth-footer-link {
+  margin-top: auto;
+}
+
+.auth-footer-link p {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.highlight-link {
+  color: var(--attendix-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.highlight-link:hover {
+  opacity: 0.8;
+}
+
+/* Right Panel - Form */
+.auth-right {
+  flex: 1;
+  background: var(--attendix-right);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 80px;
+  justify-content: center;
+}
+
+/* Role Toggle Pill */
+.role-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 60px;
+}
+
+.role-toggle-pill {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 6px;
+  gap: 4px;
+}
+
+.role-toggle-pill input[type="radio"] {
+  display: none;
+}
+
+.role-btn {
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.role-toggle-pill input[type="radio"]:checked + .role-btn {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Auth Form */
+.auth-form {
+  max-width: 400px;
+  width: 100%;
+}
+
+.form-group-modern {
+  margin-bottom: 40px;
+}
+
+.form-group-modern label {
+  display: block;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.form-input-underline {
+  width: 100%;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--attendix-input-border);
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.form-input-underline:focus {
+  border-bottom-color: var(--attendix-accent);
+}
+
+.form-input-underline::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Modern Button */
+.btn-modern {
+  padding: 16px 48px;
+  background: rgba(40, 50, 80, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-modern:hover {
+  background: rgba(60, 75, 110, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-modern:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive for Auth Layout */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  
+  .auth-left {
+    flex: 0 0 auto;
+    min-height: 40vh;
+    padding: 30px;
+  }
+  
+  .auth-title-section {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: auto 0;
+  }
+  
+  .auth-title {
+    font-size: 42px;
+  }
+  
+  .auth-right {
+    padding: 40px 30px;
+  }
+  
+  .role-toggle-container {
+    justify-content: center;
+  }
 }
 
 /* Container */

@@ -4,62 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Smart Attendance System</title>
+    <title>Register - ATTENDIX</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="auth-page">
-        <div class="container-sm">
-            <div class="card">
-                <div class="card-header">
-                    <h1>📋 Smart Attendance</h1>
-                    <p>Create your account</p>
-                </div>
-
-                <div id="error-msg" class="alert alert-error" style="display: none;"></div>
-                <div id="success-msg" class="alert alert-success" style="display: none;"></div>
-
-                <!-- Role Toggle -->
-                <div class="role-toggle">
-                    <input type="radio" name="role" id="role-student" value="student" checked>
-                    <label for="role-student">👨‍🎓 Student</label>
-                    <input type="radio" name="role" id="role-admin" value="admin">
-                    <label for="role-admin">👨‍💼 Admin</label>
-                </div>
-
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" class="form-control" placeholder="John Doe" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Min. 6 characters"
-                            required minlength="6">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" class="form-control" placeholder="••••••••"
-                            required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="register-btn">
-                        Create Account
-                    </button>
-                </form>
-
-                <p class="text-center mt-4">
-                    Already have an account? <a href="login.html" class="link">Sign in here</a>
-                </p>
+    <div class="auth-container">
+        <!-- Left Panel -->
+        <div class="auth-left">
+            <div class="auth-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span class="logo-text">ATTENDIX</span>
             </div>
+
+            <div class="auth-title-section">
+                <h1 class="auth-title">Sign Up</h1>
+                <div class="title-underline"></div>
+            </div>
+
+            <div class="auth-footer-link">
+                <p>Already have an account? <a href="login.html" class="highlight-link">Sign in here</a></p>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="auth-right">
+            <!-- Role Toggle -->
+            <div class="role-toggle-container">
+                <div class="role-toggle-pill">
+                    <input type="radio" name="role" id="role-student" value="student" checked>
+                    <label for="role-student" class="role-btn">Student</label>
+                    <input type="radio" name="role" id="role-admin" value="admin">
+                    <label for="role-admin" class="role-btn">Admin</label>
+                </div>
+            </div>
+
+            <div id="error-msg" class="alert alert-error" style="display: none;"></div>
+            <div id="success-msg" class="alert alert-success" style="display: none;"></div>
+
+            <form id="register-form" class="auth-form">
+                <div class="form-group-modern">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-input-underline" required>
+                </div>
+
+                <div class="form-group-modern">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-input-underline" required>
+                </div>
+
+                <div class="form-group-modern">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-input-underline" required minlength="6">
+                </div>
+
+                <div class="form-group-modern">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" class="form-input-underline" required>
+                </div>
+
+                <button type="submit" class="btn-modern" id="register-btn">
+                    Sign Up
+                </button>
+            </form>
         </div>
     </div>
 
