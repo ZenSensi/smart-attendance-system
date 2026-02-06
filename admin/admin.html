@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Smart Attendance</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>📋 Admin Dashboard</h1>
+        <div class="header-user">
+            <span id="admin-name">Loading...</span>
+            <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Sessions</h3>
+                <div class="value" id="total-sessions">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Today's Attendance</h3>
+                <div class="value" id="today-attendance">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Students</h3>
+                <div class="value" id="active-students">0</div>
+            </div>
+        </div>
+
+        <!-- QR Generation Section -->
+        <div class="qr-section">
+            <h2>🔐 Generate QR Code</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Create a time-limited QR code for attendance (valid for 45 minutes)
+            </p>
+
+            <div class="form-group" style="max-width: 300px; margin: 0 auto 20px;">
+                <input type="text" id="subject-input" class="form-control" placeholder="Enter Subject Name" required>
+            </div>
+
+            <button class="btn btn-primary btn-sm" onclick="generateQR()" style="width: auto;">
+                ✨ Generate QR Code
+            </button>
+
+            <div id="qr-container" style="display: none;"></div>
+            <div id="qr-info" style="display: none;">
+                <p style="margin-top: 16px; color: var(--text-secondary);">
+                    Subject: <strong id="qr-subject"></strong>
+                </p>
+                <div class="qr-timer" id="qr-timer">45:00</div>
+                <p style="font-size: 13px; color: var(--text-secondary);">Time remaining</p>
+            </div>
+        </div>
+
+        <!-- Attendance Records -->
+        <div class="card">
+            <h2 style="margin-bottom: 20px;">📊 Attendance Records</h2>
+
+            <!-- Filters -->
+            <div class="filters">
+                <input type="date" id="filter-date" class="form-control" onchange="loadAttendance()">
+                <select id="filter-subject" class="form-control" onchange="loadAttendance()">
+                    <option value="">All Subjects</option>
+                </select>
+                <button class="btn btn-success btn-sm" onclick="exportCSV()">
+                    📥 Export CSV
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-table">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-secondary);">
+                                Loading records...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

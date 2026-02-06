@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Smart Attendance</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        #reader video {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>📋 Student Dashboard</h1>
+        <div class="header-user">
+            <span id="student-name">Loading...</span>
+            <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Classes</h3>
+                <div class="value" id="total-classes">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Present</h3>
+                <div class="value" id="present-count">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Attendance %</h3>
+                <div class="value" id="attendance-percent">0%</div>
+            </div>
+        </div>
+
+        <!-- QR Scanner Section -->
+        <div class="qr-section">
+            <h2>📷 Scan QR Code</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Scan the QR code displayed by your teacher to mark attendance
+            </p>
+
+            <button class="btn btn-primary btn-sm" id="scan-btn" onclick="startScan()" style="width: auto;">
+                🔍 Start Scanner
+            </button>
+
+            <div id="reader"></div>
+
+            <div id="scan-result" style="display: none; margin-top: 20px;"></div>
+        </div>
+
+        <!-- Attendance History -->
+        <div class="card">
+            <h2 style="margin-bottom: 20px;">📊 My Attendance History</h2>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-table">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: var(--text-secondary);">
+                                Loading records...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script type="module" src="student.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Attendance System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="auth-page">
+        <div class="container-sm">
+            <div class="card">
+                <div class="card-header">
+                    <h1>📋 Smart Attendance</h1>
+                    <p>Create your account</p>
+                </div>
+
+                <div id="error-msg" class="alert alert-error" style="display: none;"></div>
+                <div id="success-msg" class="alert alert-success" style="display: none;"></div>
+
+                <!-- Role Toggle -->
+                <div class="role-toggle">
+                    <input type="radio" name="role" id="role-student" value="student" checked>
+                    <label for="role-student">👨‍🎓 Student</label>
+                    <input type="radio" name="role" id="role-admin" value="admin">
+                    <label for="role-admin">👨‍💼 Admin</label>
+                </div>
+
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Min. 6 characters"
+                            required minlength="6">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-control" placeholder="••••••••"
+                            required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="register-btn">
+                        Create Account
+                    </button>
+                </form>
+
+                <p class="text-center mt-4">
+                    Already have an account? <a href="login.html" class="link">Sign in here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="register.js"></script>
+</body>
+
+</html>
