@@ -24,9 +24,6 @@ function setLoading(loading) {
         : 'Sign In';
 }
 
-function getSelectedRole() {
-    return document.querySelector('input[name="role"]:checked').value;
-}
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -35,7 +32,6 @@ form.addEventListener("submit", async (e) => {
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    const selectedRole = getSelectedRole();
 
     try {
         // Sign in with Firebase Auth
@@ -54,13 +50,6 @@ form.addEventListener("submit", async (e) => {
         const userData = userDoc.data();
         const actualRole = userData.role;
 
-        // Check if selected role matches actual role
-        if (actualRole !== selectedRole) {
-            showError(`Invalid login. You are registered as ${actualRole}, not ${selectedRole}.`);
-            await auth.signOut();
-            setLoading(false);
-            return;
-        }
 
         // Redirect based on role
         if (actualRole === "admin") {
