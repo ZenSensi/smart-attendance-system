@@ -11,7 +11,7 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <h1>📋 Admin Dashboard</h1>
+        <h1>Admin Dashboard</h1>
         <div class="header-user">
             <span id="admin-name">Loading...</span>
             <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
@@ -37,7 +37,7 @@
 
         <!-- QR Generation Section -->
         <div class="qr-section">
-            <h2>🔐 Generate QR Code</h2>
+            <h2>Generate QR Code</h2>
             <p style="color: var(--text-secondary); margin-bottom: 20px;">
                 Create a time-limited QR code for attendance (valid for 45 minutes)
             </p>
@@ -47,7 +47,7 @@
             </div>
 
             <button class="btn btn-primary btn-sm" onclick="generateQR()" style="width: auto;">
-                ✨ Generate QR Code
+                Generate QR Code
             </button>
 
             <div id="qr-container" style="display: none;"></div>
@@ -62,7 +62,7 @@
 
         <!-- Attendance Records -->
         <div class="card">
-            <h2 style="margin-bottom: 20px;">📊 Attendance Records</h2>
+            <h2 style="margin-bottom: 20px;">Attendance Records</h2>
 
             <!-- Filters -->
             <div class="filters">
@@ -71,7 +71,7 @@
                     <option value="">All Subjects</option>
                 </select>
                 <button class="btn btn-success btn-sm" onclick="exportCSV()">
-                    📥 Export CSV
+                    Export CSV
                 </button>
             </div>
 

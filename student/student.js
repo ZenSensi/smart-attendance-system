@@ -75,11 +75,11 @@ window.startScan = async function () {
         // Stop scanning
         await html5QrCode.stop();
         isScanning = false;
-        scanBtn.innerHTML = "🔍 Start Scanner";
+        scanBtn.innerHTML = "Start Scanner";
         return;
     }
 
-    scanBtn.innerHTML = "⏹️ Stop Scanner";
+    scanBtn.innerHTML = "Stop Scanner";
     isScanning = true;
 
     html5QrCode = new Html5Qrcode("reader");
@@ -95,7 +95,7 @@ window.startScan = async function () {
                 // Stop scanner after successful scan
                 await html5QrCode.stop();
                 isScanning = false;
-                scanBtn.innerHTML = "🔍 Start Scanner";
+                scanBtn.innerHTML = "Start Scanner";
 
                 // Mark attendance
                 await markAttendance(decodedText);
@@ -108,7 +108,7 @@ window.startScan = async function () {
         console.error("Scanner error:", error);
         showResult("error", "Failed to start camera. Please allow camera access.");
         isScanning = false;
-        scanBtn.innerHTML = "🔍 Start Scanner";
+        scanBtn.innerHTML = "Start Scanner";
     }
 };
 
