@@ -13,7 +13,7 @@
   --warning: #f59e0b;
   --radius: 12px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  
+
   /* New ATTENDIX Theme Colors */
   --attendix-left: #1e2a47;
   --attendix-right: #151d30;
@@ -157,7 +157,7 @@ body {
   background: transparent;
 }
 
-.role-toggle-pill input[type="radio"]:checked + .role-btn {
+.role-toggle-pill input[type="radio"]:checked+.role-btn {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -231,13 +231,13 @@ body {
   .auth-container {
     flex-direction: column;
   }
-  
+
   .auth-left {
     flex: 0 0 auto;
     min-height: 40vh;
     padding: 30px;
   }
-  
+
   .auth-title-section {
     position: relative;
     top: auto;
@@ -245,15 +245,15 @@ body {
     transform: none;
     margin: auto 0;
   }
-  
+
   .auth-title {
     font-size: 42px;
   }
-  
+
   .auth-right {
     padding: 40px 30px;
   }
-  
+
   .role-toggle-container {
     justify-content: center;
   }
