@@ -35,9 +35,6 @@ function setLoading(loading) {
         : 'Create Account';
 }
 
-function getSelectedRole() {
-    return document.querySelector('input[name="role"]:checked').value;
-}
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -47,7 +44,7 @@ form.addEventListener("submit", async (e) => {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
-    const role = getSelectedRole();
+    const role = "student";
 
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -75,14 +72,7 @@ form.addEventListener("submit", async (e) => {
 
         showSuccess("Account created successfully! Redirecting...");
 
-        // Redirect after short delay
-        setTimeout(() => {
-            if (role === "admin") {
-                window.location.href = "admin/admin.html";
-            } else {
-                window.location.href = "student/student.html";
-            }
-        }, 1500);
+        window.location.href = "student/student.html";
 
     } catch (error) {
         console.error("Registration error:", error);
