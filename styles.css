@@ -407,7 +407,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 8px 20px rgba(241, 130, 99, 0.4);
 }
 
 .btn-primary:disabled {
@@ -417,13 +417,15 @@ body {
 }
 
 .btn-secondary {
-  background: var(--bg-input);
-  color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ff8c42;
+  color: white;
+  border: none;
 }
 
 .btn-secondary:hover {
-  background: var(--bg-card);
+  background: #ff8c42;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
 }
 
 .btn-success {
