@@ -20,8 +20,8 @@ function hideError() {
 function setLoading(loading) {
     loginBtn.disabled = loading;
     loginBtn.innerHTML = loading
-        ? '<span class="spinner"></span> Signing in...'
-        : 'Sign In';
+        ? 'Logging in...'
+        : 'Login';
 }
 
 

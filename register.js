@@ -31,7 +31,7 @@ function hideMessages() {
 function setLoading(loading) {
     registerBtn.disabled = loading;
     registerBtn.innerHTML = loading
-        ? '<span class="spinner"></span> Creating account...'
+        ? 'Creating account...'
         : 'Create Account';
 }
 
