@@ -15,7 +15,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #171e2e;
+            background: var(--bg-dark);
             padding: 20px;
         }
 
@@ -27,17 +27,13 @@
             margin-bottom: 8px;
             font-family: 'Inter', sans-serif;
             text-transform: capitalize;
-        }
-
-        /* Pixel-style letter effect */
-        .landing-logo span {
-            display: inline-block;
+            text-shadow: 2px 2px 0px rgba(184, 110, 60, 0.3);
         }
 
         .landing-subtitle {
             font-family: 'Space Mono', monospace;
             font-size: 22px;
-            color: #7c8cff;
+            color: var(--primary);
             letter-spacing: 2px;
             margin-bottom: 60px;
         }
@@ -52,8 +48,8 @@
             font-family: 'Space Mono', monospace;
             font-size: 18px;
             font-weight: 400;
-            color: #1a1f2e;
-            background: #9aa5c4;
+            color: #ffffff;
+            background: var(--primary);
             border: none;
             border-radius: 12px;
             cursor: pointer;
@@ -62,9 +58,9 @@
         }
 
         .landing-btn:hover {
-            background: #b8c2dc;
+            background: var(--primary-dark);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 140, 66, 0.3);
         }
 
         @media (max-width: 600px) {

@@ -1,5 +1,28 @@
 /* Smart Attendance System - Global Styles */
 :root {
+  /* Default Light Theme (Beige & Peach) */
+  --primary: #ff8c42;
+  --primary-dark: #e67e3a;
+  --secondary: #ffae67;
+  --bg-dark: #e6d5c3;
+  --bg-card: #f5e9da;
+  --bg-input: #ffffff;
+  --text-primary: #1e2a47;
+  --text-secondary: #5c6b89;
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(30, 42, 71, 0.1);
+
+  /* ATTENDIX Light UI */
+  --attendix-left: #ffae67;
+  --attendix-right: #e6d5c3;
+  --attendix-accent: #ff8c42;
+  --attendix-input-border: rgba(30, 42, 71, 0.2);
+}
+
+.dark-theme {
   --primary: #6366f1;
   --primary-dark: #4f46e5;
   --secondary: #22d3ee;
@@ -8,13 +31,8 @@
   --bg-input: #334155;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
-  --success: #22c55e;
-  --error: #ef4444;
-  --warning: #f59e0b;
-  --radius: 12px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 
-  /* New ATTENDIX Theme Colors */
   --attendix-left: #1e2a47;
   --attendix-right: #151d30;
   --attendix-accent: #7c8cff;
@@ -53,6 +71,8 @@ body {
   flex-direction: column;
   padding: 40px;
   position: relative;
+  color: #ffffff;
+  /* Default color for left panel */
 }
 
 .auth-logo {
@@ -65,14 +85,14 @@ body {
 .logo-icon {
   width: 28px;
   height: 28px;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .logo-text {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .auth-title-section {
@@ -85,14 +105,14 @@ body {
 .auth-title {
   font-size: 56px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
   margin-bottom: 12px;
 }
 
 .title-underline {
   width: 80px;
   height: 4px;
-  background: var(--attendix-accent);
+  background: #ffffff;
   border-radius: 2px;
 }
 
@@ -102,13 +122,13 @@ body {
 
 .auth-footer-link p {
   font-size: 14px;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .highlight-link {
-  color: var(--attendix-accent);
-  text-decoration: none;
-  font-weight: 500;
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: 600;
   transition: opacity 0.3s ease;
 }
 
@@ -203,21 +223,21 @@ body {
 /* Modern Button */
 .btn-modern {
   padding: 16px 48px;
-  background: rgba(40, 50, 80, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--primary);
+  border: none;
   border-radius: 8px;
-  color: var(--text-primary);
+  color: white;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 20px;
 }
 
 .btn-modern:hover {
-  background: rgba(60, 75, 110, 0.9);
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 140, 66, 0.3);
 }
 
 .btn-modern:disabled {
@@ -446,15 +466,15 @@ body {
 }
 
 .alert-error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #dc2626;
 }
 
 .alert-success {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #86efac;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #16a34a;
 }
 
 /* Header */
@@ -463,9 +483,13 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: var(--bg-card);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(30, 42, 71, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header h1 {
@@ -492,7 +516,7 @@ body {
   overflow-x: auto;
   border-radius: var(--radius);
   background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(30, 42, 71, 0.05);
 }
 
 table {
