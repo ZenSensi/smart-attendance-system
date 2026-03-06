@@ -81,7 +81,7 @@ smart-attendance-system-project/
 
 1. **Clone the repository**
    ```bash
-   git clone [<click-to-copy>](https://github.com/ZenSensi/smart-attendance-system.git)
+   git clone https://github.com/ZenSensi/smart-attendance-system.git
    cd smart-attendance-system-project
    ```
 
