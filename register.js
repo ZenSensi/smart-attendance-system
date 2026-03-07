@@ -88,7 +88,7 @@ form.addEventListener("submit", async (e) => {
                 showError("Password is too weak. Use at least 6 characters.");
                 break;
             default:
-                showError("Registration failed. Please try again.");
+                showError(`Registration failed: ${error.code}. Please try again.`);
         }
         setLoading(false);
     }

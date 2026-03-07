@@ -75,7 +75,7 @@ form.addEventListener("submit", async (e) => {
                 showError("Too many attempts. Please try again later.");
                 break;
             default:
-                showError("Login failed. Please try again.");
+                showError(`Login failed: ${error.code}. Please try again.`);
         }
         setLoading(false);
     }
