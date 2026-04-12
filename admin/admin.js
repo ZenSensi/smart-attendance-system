@@ -120,7 +120,7 @@ window.generateQR = async function () {
 
     } catch (error) {
         console.error("Error generating QR:", error);
-        alert("Failed to generate QR code. Please try again.");
+        alert(`Failed to generate QR code: ${error.code}. Please try again.`);
     }
 };
 
