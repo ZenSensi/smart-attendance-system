@@ -80,7 +80,7 @@ window.generateQR = async function () {
 
     try {
         const now = Date.now();
-        const expiresAt = now + 45 * 60 * 1000; // 45 minutes
+        const expiresAt = now + 50 * 60 * 1000; // 50 minutes
 
         // Create lecture document
         const lectureRef = await addDoc(collection(db, "lectures"), {
