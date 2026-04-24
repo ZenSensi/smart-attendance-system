@@ -79,6 +79,31 @@ window.startScan = async function () {
         return;
     }
 
+    // Get location before scanning
+    let latitude = null;
+    let longitude = null;
+    try {
+        scanBtn.innerHTML = "Getting location...";
+        const position = await new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error("Geolocation not supported"));
+            } else {
+                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            }
+        });
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    } catch (err) {
+        console.error("Location error:", err);
+        showResult("error", "Failed to get location. Ensure GPS is enabled.");
+        scanBtn.innerHTML = "Start Scanner";
+        return;
+    }
+
     scanBtn.innerHTML = "Stop Scanner";
     isScanning = true;
 
@@ -97,8 +122,8 @@ window.startScan = async function () {
                 isScanning = false;
                 scanBtn.innerHTML = "Start Scanner";
 
-                // Mark attendance
-                await markAttendance(decodedText);
+                // Mark attendance with token and coords
+                await markAttendance(decodedText, latitude, longitude);
             },
             (errorMessage) => {
                 // QR scan error - ignore, keep scanning
@@ -112,9 +137,23 @@ window.startScan = async function () {
     }
 };
 
+// Haversine formula to calculate distance in meters
+function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
+    const R = 6371e3; // Radius of the earth in m
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; 
+}
+
 // Mark attendance
-async function markAttendance(lectureId) {
+async function markAttendance(lectureId, latitude, longitude) {
     const resultDiv = document.getElementById("scan-result");
+    showResult("warning", "⏳ Processing attendance, verifying location...");
 
     try {
         // Get lecture details
@@ -134,6 +173,22 @@ async function markAttendance(lectureId) {
             return;
         }
 
+        // Verify Location Match
+        if (lectureData.latitude && lectureData.longitude && latitude && longitude) {
+            const dist = getDistanceFromLatLonInM(
+                lectureData.latitude, lectureData.longitude,
+                latitude, longitude
+            );
+            
+            if (dist > 100) { 
+                showResult("error", `❌ You are too far from the classroom (${Math.round(dist)}m away). You must be within 100 meters.`);
+                return;
+            }
+        } else if (lectureData.latitude && (!latitude || !longitude)) {
+            showResult("error", "❌ Please enable GPS/Location services to mark attendance for this session.");
+            return;
+        }
+
         // Check if already marked
         const attendanceId = `${lectureId}_${currentUser.uid}`;
         const existingAttendance = await getDoc(doc(db, "attendance", attendanceId));
@@ -143,14 +198,16 @@ async function markAttendance(lectureId) {
             return;
         }
 
-        // Mark attendance
+        // Mark attendance locally
         await setDoc(doc(db, "attendance", attendanceId), {
             lectureId: lectureId,
             studentId: currentUser.uid,
             studentName: currentUserData.name,
             subject: lectureData.subject || "Unknown",
             timestamp: new Date(),
-            status: "present"
+            status: "present",
+            latitude: latitude,
+            longitude: longitude
         });
 
         showResult("success", `✅ Attendance marked for <strong>${lectureData.subject || 'this session'}</strong>!`);
@@ -161,7 +218,7 @@ async function markAttendance(lectureId) {
 
     } catch (error) {
         console.error("Error marking attendance:", error);
-        showResult("error", "❌ Failed to mark attendance. Please try again.");
+        showResult("error", `❌ Failed: ${error.message || "Please try again."}`);
     }
 }
 

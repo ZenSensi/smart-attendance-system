@@ -6,14 +6,16 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
     
-    // Allow all logged-in users to read/write lectures (QR codes)
+    // Allow all logged-in users to read lectures, and admins to write
     match /lectures/{lectureId} {
-      allow read, write: if request.auth != null; 
+      allow read: if request.auth != null; 
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
     }
     
-    // Allow students to mark their attendance
+    // Allow students to read/write their own attendance, and admins to read all.
     match /attendance/{attendanceId} {
-      allow read, write: if request.auth != null;
+      allow read: if request.auth != null && (request.auth.uid == resource.data.studentId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin");
+      allow write: if request.auth != null && request.auth.uid == request.resource.data.studentId;
     }
   }
 }

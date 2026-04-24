@@ -79,21 +79,43 @@ window.generateQR = async function () {
     }
 
     try {
+        document.getElementById("qr-container").innerHTML = "<p>Getting location...</p>";
+        document.getElementById("qr-container").style.display = "block";
+
+        // 1. Get GPS coordinates
+        const position = await new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error("Geolocation is not supported by your browser"));
+            } else {
+                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            }
+        });
+
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        document.getElementById("qr-container").innerHTML = "<p>Generating session...</p>";
+
         const now = Date.now();
         const expiresAt = now + 50 * 60 * 1000; // 50 minutes
 
-        // Create lecture document
+        // Create lecture document with GPS
         const lectureRef = await addDoc(collection(db, "lectures"), {
             subject: subject,
             createdAt: Timestamp.now(),
             expiresAt: Timestamp.fromMillis(expiresAt),
-            createdBy: auth.currentUser.uid
+            createdBy: auth.currentUser.uid,
+            latitude: latitude,
+            longitude: longitude
         });
 
-        // Generate QR code
+        // Generate QR code with lecture ID
         const qrContainer = document.getElementById("qr-container");
         qrContainer.innerHTML = "";
-        qrContainer.style.display = "block";
 
         new QRCode(qrContainer, {
             text: lectureRef.id,
@@ -120,7 +142,9 @@ window.generateQR = async function () {
 
     } catch (error) {
         console.error("Error generating QR:", error);
-        alert(`Failed to generate QR code: ${error.code}. Please try again.`);
+        alert(`Failed to generate QR code: ${error.message || error.code}. Ensure location services are enabled.`);
+        document.getElementById("qr-container").innerHTML = "";
+        document.getElementById("qr-container").style.display = "none";
     }
 };
 
