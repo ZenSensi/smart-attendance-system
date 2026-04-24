@@ -73,6 +73,12 @@ window.generateQR = async function () {
     const subjectInput = document.getElementById("subject-input");
     const subject = subjectInput.value.trim();
 
+    const expiryInput = document.getElementById("expiry-time");
+    let expiryMinutes = parseInt(expiryInput ? expiryInput.value : 50);
+    if (isNaN(expiryMinutes) || expiryMinutes < 1) {
+        expiryMinutes = 50; // fallback to 50 mins
+    }
+
     if (!subject) {
         alert("Please enter a subject name.");
         return;
@@ -80,7 +86,8 @@ window.generateQR = async function () {
 
     try {
         document.getElementById("qr-container").innerHTML = "<p>Getting location...</p>";
-        document.getElementById("qr-container").style.display = "block";
+        document.getElementById("qr-container").style.display = "inline-block";
+        document.getElementById("qr-info").style.display = "none";
 
         // 1. Get GPS coordinates
         const position = await new Promise((resolve, reject) => {
@@ -101,7 +108,7 @@ window.generateQR = async function () {
         document.getElementById("qr-container").innerHTML = "<p>Generating session...</p>";
 
         const now = Date.now();
-        const expiresAt = now + 50 * 60 * 1000; // 50 minutes
+        const expiresAt = now + expiryMinutes * 60 * 1000; // dynamic minutes
 
         // Create lecture document with GPS
         const lectureRef = await addDoc(collection(db, "lectures"), {
