@@ -175,9 +175,27 @@ function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
 }
 
 // Mark attendance
-async function markAttendance(lectureId, latitude, longitude) {
+async function markAttendance(qrData, latitude, longitude) {
     const resultDiv = document.getElementById("scan-result");
     
+    // Parse dynamic QR data
+    const parts = qrData.split('|');
+    if (parts.length !== 2) {
+        showResult("error", "❌ Invalid QR code format. Please scan a valid Attendixx QR code.");
+        return;
+    }
+    
+    const lectureId = parts[0];
+    const qrTimestamp = parseInt(parts[1], 10);
+    
+    // Age verification (15 seconds limit)
+    const ageInMs = Date.now() - qrTimestamp;
+    // We allow up to 15s old. Also allow up to 5s in the future just in case of slight clock sync drift between devices.
+    if (isNaN(qrTimestamp) || ageInMs > 15000 || ageInMs < -5000) { 
+        showResult("error", "❌ This QR code screenshot is expired. Please scan the live QR code on the screen.");
+        return;
+    }
+
     // 1. SMART LAYER: Device Lock Check
     if (localStorage.getItem("attended_" + lectureId)) {
         showResult("error", "❌ This device has already been used to mark attendance for this session. One device per student.");

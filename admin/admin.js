@@ -6,6 +6,7 @@ import {
 
 let currentQRExpiry = null;
 let timerInterval = null;
+let qrRotationInterval = null;
 let subjects = new Set();
 
 // Check auth and role
@@ -120,17 +121,27 @@ window.generateQR = async function () {
             longitude: longitude
         });
 
-        // Generate QR code with lecture ID
+        // Generate rotating QR code
         const qrContainer = document.getElementById("qr-container");
-        qrContainer.innerHTML = "";
+        
+        // Clear any existing rotation
+        if (qrRotationInterval) clearInterval(qrRotationInterval);
 
-        new QRCode(qrContainer, {
-            text: lectureRef.id,
-            width: 200,
-            height: 200,
-            colorDark: "#000000",
-            colorLight: "#ffffff"
-        });
+        const drawQR = () => {
+            qrContainer.innerHTML = "";
+            const token = `${lectureRef.id}|${Date.now()}`;
+            new QRCode(qrContainer, {
+                text: token,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff"
+            });
+        };
+
+        // Draw immediately, then every 10 seconds
+        drawQR();
+        qrRotationInterval = setInterval(drawQR, 10000);
 
         // Show QR info
         document.getElementById("qr-info").style.display = "block";
@@ -164,6 +175,14 @@ function startTimer() {
 
         if (remaining <= 0) {
             clearInterval(timerInterval);
+            if (qrRotationInterval) clearInterval(qrRotationInterval);
+            
+            const qrContainer = document.getElementById("qr-container");
+            if (qrContainer) {
+                qrContainer.innerHTML = "";
+                qrContainer.style.display = "none";
+            }
+            
             document.getElementById("qr-timer").textContent = "EXPIRED";
             document.getElementById("qr-timer").style.color = "var(--error)";
             return;
