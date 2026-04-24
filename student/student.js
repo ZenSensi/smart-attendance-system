@@ -212,6 +212,16 @@ async function markAttendance(lectureId, latitude, longitude) {
 
         showResult("success", `✅ Attendance marked for <strong>${lectureData.subject || 'this session'}</strong>!`);
 
+        // Lock the scanner visually
+        const scanBtn = document.getElementById("scan-btn");
+        if (scanBtn) {
+            scanBtn.disabled = true;
+            scanBtn.innerHTML = "Attendance Locked 🔒";
+            scanBtn.style.opacity = "0.6";
+            scanBtn.style.cursor = "not-allowed";
+            scanBtn.onclick = null; // Remove click listener
+        }
+
         // Reload stats and history
         loadStats();
         loadAttendanceHistory();
