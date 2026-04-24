@@ -195,8 +195,7 @@ async function loadAttendanceHistory() {
         const snapshot = await getDocs(
             query(
                 collection(db, "attendance"),
-                where("studentId", "==", currentUser.uid),
-                orderBy("timestamp", "desc")
+                where("studentId", "==", currentUser.uid)
             )
         );
 
@@ -207,8 +206,15 @@ async function loadAttendanceHistory() {
 
         tableBody.innerHTML = "";
 
+        // Sort on client side to avoid needing composite index in Firebase
+        const records = [];
         snapshot.forEach(docSnap => {
-            const data = docSnap.data();
+            records.push(docSnap.data());
+        });
+
+        records.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
+
+        records.forEach(data => {
             const timestamp = data.timestamp.toDate();
 
             tableBody.innerHTML += `
