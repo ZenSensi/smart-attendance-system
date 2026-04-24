@@ -8,6 +8,29 @@ let html5QrCode = null;
 let isScanning = false;
 let currentUser = null;
 let currentUserData = null;
+let scanStartTime = 0;
+
+// Get or create Device ID
+function getDeviceId() {
+    let deviceId = localStorage.getItem("attendixx_device_id");
+    if (!deviceId) {
+        deviceId = 'dev_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+        localStorage.setItem("attendixx_device_id", deviceId);
+    }
+    return deviceId;
+}
+
+// Fetch Public IP
+async function fetchPublicIP() {
+    try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        return data.ip;
+    } catch (e) {
+        console.warn("Could not fetch IP", e);
+        return "Unknown IP";
+    }
+}
 
 // Check auth and role
 onAuthStateChanged(auth, async (user) => {
@@ -106,6 +129,7 @@ window.startScan = async function () {
 
     scanBtn.innerHTML = "Stop Scanner";
     isScanning = true;
+    scanStartTime = Date.now();
 
     html5QrCode = new Html5Qrcode("reader");
 
@@ -153,6 +177,13 @@ function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
 // Mark attendance
 async function markAttendance(lectureId, latitude, longitude) {
     const resultDiv = document.getElementById("scan-result");
+    
+    // 1. SMART LAYER: Device Lock Check
+    if (localStorage.getItem("attended_" + lectureId)) {
+        showResult("error", "❌ This device has already been used to mark attendance for this session. One device per student.");
+        return;
+    }
+
     showResult("warning", "⏳ Processing attendance, verifying location...");
 
     try {
@@ -198,6 +229,11 @@ async function markAttendance(lectureId, latitude, longitude) {
             return;
         }
 
+        // Gather smart layer metrics
+        const scanDuration = Date.now() - scanStartTime;
+        const deviceId = getDeviceId();
+        const ipAddress = await fetchPublicIP();
+
         // Mark attendance locally
         await setDoc(doc(db, "attendance", attendanceId), {
             lectureId: lectureId,
@@ -207,8 +243,14 @@ async function markAttendance(lectureId, latitude, longitude) {
             timestamp: new Date(),
             status: "present",
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            deviceId: deviceId,
+            ipAddress: ipAddress,
+            scanDuration: scanDuration
         });
+
+        // 2. SMART LAYER: Set Device Lock
+        localStorage.setItem("attended_" + lectureId, "true");
 
         showResult("success", `✅ Attendance marked for <strong>${lectureData.subject || 'this session'}</strong>!`);
 

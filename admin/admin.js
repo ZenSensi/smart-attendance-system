@@ -208,15 +208,51 @@ window.loadAttendance = async function () {
             return;
         }
 
-        tableBody.innerHTML = records.map(record => `
+        // SMART LAYER: Anomaly Detection
+        const deviceCounts = {};
+        const ipCounts = {};
+
+        records.forEach(r => {
+            if (!deviceCounts[r.lectureId]) deviceCounts[r.lectureId] = {};
+            if (!ipCounts[r.lectureId]) ipCounts[r.lectureId] = {};
+
+            if (r.deviceId) {
+                deviceCounts[r.lectureId][r.deviceId] = (deviceCounts[r.lectureId][r.deviceId] || 0) + 1;
+            }
+            if (r.ipAddress && r.ipAddress !== "Unknown IP") {
+                ipCounts[r.lectureId][r.ipAddress] = (ipCounts[r.lectureId][r.ipAddress] || 0) + 1;
+            }
+        });
+
+        tableBody.innerHTML = records.map(record => {
+            let flags = [];
+            
+            // Check Smart Layer Rules
+            if (record.deviceId && deviceCounts[record.lectureId][record.deviceId] > 1) {
+                flags.push('<span title="Same device used by multiple students" style="cursor:help; background: #fee2e2; color: #ef4444; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">🚩 Shared Device</span>');
+            }
+            if (record.ipAddress && record.ipAddress !== "Unknown IP" && ipCounts[record.lectureId][record.ipAddress] > 1) {
+                flags.push('<span title="Same network/IP used by multiple students" style="cursor:help; background: #fef3c7; color: #f59e0b; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">⚠️ Shared IP</span>');
+            }
+            if (record.scanDuration && record.scanDuration < 2000) { 
+                flags.push('<span title="Suspiciously fast scan" style="cursor:help; background: #e0e7ff; color: #6366f1; padding: 2px 6px; border-radius: 4px;">⏱️ Fast Scan</span>');
+            }
+
+            const flagHtml = flags.length > 0 ? `<div style="font-size: 0.75em; margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">${flags.join('')}</div>` : '';
+
+            return `
             <tr>
-                <td>${record.studentName || record.studentId}</td>
+                <td>
+                    <div style="font-weight: 500;">${record.studentName || record.studentId}</div>
+                    ${flagHtml}
+                </td>
                 <td>${record.subject || 'N/A'}</td>
                 <td>${record.timestamp.toLocaleDateString()}</td>
                 <td>${record.timestamp.toLocaleTimeString()}</td>
                 <td><span class="badge badge-success">Present</span></td>
             </tr>
-        `).join('');
+            `;
+        }).join('');
 
     } catch (error) {
         console.error("Error loading attendance:", error);
